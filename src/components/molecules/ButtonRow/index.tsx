@@ -9,9 +9,10 @@ export interface ButtonRowInterface {
   type?: ButtonType;
   styles?: any;
   fontSize?: number;
+  isSelectedCb?: (data: any) => void;
 }
 
-const ButtonRow = ({buttons, type, fontSize, ...props}: ButtonRowInterface) => {
+const ButtonRow = ({buttons, type, fontSize, isSelectedCb = () => {}, ...props}: ButtonRowInterface) => {
   if (!buttons || !isArray(buttons) || !buttons.length) {
     return null;
   }
@@ -19,9 +20,11 @@ const ButtonRow = ({buttons, type, fontSize, ...props}: ButtonRowInterface) => {
   const renderItem: ListRenderItem<ButtonInterface> = ({item}) => {
     const {label, onPress} = item;
 
+    const isSelected = isSelectedCb(item);
+
     return (
       <Styles.ButtonWrapper>
-        <Styles.Button label={label} type={type} onPress={onPress} fontSize={fontSize} {...props} />
+        <Styles.Button label={label} type={type} onPress={onPress} fontSize={fontSize} isSelected={isSelected} {...props} />
       </Styles.ButtonWrapper>
     );
   };

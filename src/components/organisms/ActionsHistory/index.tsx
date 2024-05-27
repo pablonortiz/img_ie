@@ -10,22 +10,27 @@ import useActionsHistory from '@hooks/useActionsHistory';
 const ActionsHistory = () => {
   const dispatch = useDispatch();
   const actionsHistory = useSelector((state: State) => selectActionsHistory(state));
-  const {setAction} = useActionsHistory();
+  const {selectedAction, setAction} = useActionsHistory();
 
   const onPressButton = (id: string, url: string) => {
     setAction(id);
     return dispatch(actSetSelectedImage(url));
   };
 
+  const isSelectedCb = data => {
+    const {id} = data;
+    return selectedAction?.id === id;
+  };
+
   const buttons = actionsHistory.map((data, index) => {
     const {id, url} = data;
 
-    return {label: (index + 1).toString(), onPress: () => onPressButton(id, url)};
+    return {id, label: (index + 1).toString(), onPress: () => onPressButton(id, url)};
   });
 
   return (
     <Styles.Wrapper>
-      <ButtonRow buttons={buttons} type="circular" />
+      <ButtonRow buttons={buttons} type="circular" isSelectedCb={isSelectedCb} />
     </Styles.Wrapper>
   );
 };

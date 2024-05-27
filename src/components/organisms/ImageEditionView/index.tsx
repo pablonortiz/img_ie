@@ -21,7 +21,7 @@ const ImageEditionView = () => {
   return (
     <Styles.Wrapper>
       <Styles.ButtonsWrapper>
-        <Button label="D" type="circular" onPress={handleCleanImage} />
+        <Button iconData={{name: 'delete'}} type="circular" onPress={handleCleanImage} />
       </Styles.ButtonsWrapper>
       <Styles.ImageWrapper>
         <Styles.Image src={selectedImage} />

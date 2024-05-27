@@ -1,8 +1,10 @@
 import getColor from '@utils/getColor';
 import styled from 'styled-components/native';
+import IconComponent from 'react-native-vector-icons/MaterialIcons';
 
 interface WrapperProps {
   typeStyle: any;
+  isSelected: boolean;
 }
 
 const Wrapper = styled.TouchableHighlight<WrapperProps>`
@@ -11,7 +13,12 @@ const Wrapper = styled.TouchableHighlight<WrapperProps>`
   align-items: center;
   align-self: center;
   padding: 5px;
-  ${({typeStyle}) => typeStyle}
+  border-color: ${getColor('base', 'white')};
+  ${({isSelected}) =>
+    isSelected &&
+    `border-width: 2px;
+  `}
+  ${({typeStyle}) => typeStyle};
 `;
 
 interface LabelProps {
@@ -23,4 +30,8 @@ const Label = styled.Text<LabelProps>`
   ${({fontSize}) => `font-size: ${fontSize}px`};
 `;
 
-export default {Wrapper, Label};
+const Icon = styled(IconComponent)`
+  align-self: center;
+`;
+
+export default {Wrapper, Label, Icon};

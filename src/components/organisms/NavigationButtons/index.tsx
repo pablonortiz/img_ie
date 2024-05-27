@@ -8,6 +8,7 @@ import {useSelector} from 'react-redux';
 
 import selectSelectedImage from '@redux/images/selectors/selectSelectedImage';
 import {State} from '@constants/interfaces';
+import getColor from '@utils/getColor';
 
 const NavigationButtons = () => {
   const selectedImage = useSelector((state: State) => selectSelectedImage(state));
@@ -25,8 +26,8 @@ const NavigationButtons = () => {
 
   return (
     <Styles.Wrapper>
-      <Button label="<-" onPress={handleGoBack} type="circular" fontSize={28} />
-      <Button label="S" onPress={handleSaveImage} type="circular" fontSize={28} />
+      <Button iconData={{name: 'arrow-back'}} onPress={handleGoBack} type="circular" fontSize={28} />
+      <Button iconData={{name: 'download'}} onPress={handleSaveImage} type="circular" fontSize={28} />
     </Styles.Wrapper>
   );
 };

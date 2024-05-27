@@ -5,6 +5,7 @@ import BlankTemplate from '@components/templates/BlankTemplate';
 import {useDispatch} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import {actSetSelectedImage} from '@redux/images/actions';
+import {actWipeActionsHistory} from '@redux/userActions/actions';
 
 const ImageList = () => {
   const dispatch = useDispatch();
@@ -18,7 +19,8 @@ const ImageList = () => {
 
   const onPressImage = imageUrl => {
     dispatch(actSetSelectedImage(imageUrl));
-    return navigate('ImageEdition');
+    dispatch(actWipeActionsHistory());
+    return navigate('ImageEdition' as never);
   };
 
   useEffect(() => {
