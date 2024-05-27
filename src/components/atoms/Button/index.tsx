@@ -28,7 +28,7 @@ const Button = ({label, iconData = {}, type, onPress = () => {}, fontSize = 20, 
   const isIconToLeft = isValidIcon && orientation === 'left';
   const isIconToRight = isValidIcon && orientation === 'right';
 
-  const typeStyle = getStyleByType(type);
+  const typeStyle = getStyleByType(type, fontSize);
 
   return (
     <Styles.Wrapper typeStyle={typeStyle} onPress={onPress} underlayColor={getColor('main', 'secondary')} {...props}>

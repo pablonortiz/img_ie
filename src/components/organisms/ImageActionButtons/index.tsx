@@ -1,13 +1,13 @@
 import React, {useState} from 'react';
 import Styles from './styles';
 import ButtonRow from '@components/molecules/ButtonRow';
-import {isArray} from '@utils/index';
+import {isArray, isString} from '@utils/index';
 import {ActionButton} from '@constants/interfaces';
-import InputAction from '@components/molecules/InputAction';
 import Animated, {useSharedValue, useAnimatedStyle, withTiming, Easing} from 'react-native-reanimated';
 import Button from '@components/atoms/Button';
 import SlideAction from '@components/molecules/SlideAction';
 import useActionOnImage from '@hooks/useActionOnImage';
+import PickerAction from '@components/molecules/PickerAction';
 
 export interface ImageActionButtonsInterface {
   selectedActionData: {};
@@ -25,7 +25,7 @@ const ImageActionButtons = ({selectedActionData, actionButtonsData, onPressButto
   // Animation logic
   const firstComponentStyle = useAnimatedStyle(() => {
     return {
-      height: withTiming(firstComponentHeight.value * 300, {
+      height: withTiming(firstComponentHeight.value * 150, {
         duration: 500,
         easing: Easing.out(Easing.cubic),
       }),
@@ -38,7 +38,7 @@ const ImageActionButtons = ({selectedActionData, actionButtonsData, onPressButto
 
   const secondComponentStyle = useAnimatedStyle(() => {
     return {
-      height: withTiming(secondComponentHeight.value * 300, {
+      height: withTiming(secondComponentHeight.value * 150, {
         duration: 500,
         easing: Easing.out(Easing.cubic),
       }),
@@ -77,19 +77,21 @@ const ImageActionButtons = ({selectedActionData, actionButtonsData, onPressButto
     };
   });
 
-  const onSlide = value => {
+  const onAction = (value: string | number) => {
+    const validValue: string = isString(value) ? value : Math.round(value).toString();
+
     processImage({
       action: selectedActionData?.action,
-      value: Math.round(value).toString(),
+      value: validValue,
     });
   };
 
-  const renderInput = () => <InputAction title={selectedActionData?.label} />;
+  const renderPicker = () => <PickerAction title={selectedActionData?.label} values={selectedActionData?.values} onChange={onAction} />;
 
-  const renderSlider = () => <SlideAction title={selectedActionData?.label} values={selectedActionData?.values} onSlide={onSlide} />;
+  const renderSlider = () => <SlideAction title={selectedActionData?.label} values={selectedActionData?.values} onSlide={onAction} />;
 
   const actionComponentsToRender = {
-    input: renderInput(),
+    picker: renderPicker(),
     slider: renderSlider(),
   };
 
@@ -99,7 +101,7 @@ const ImageActionButtons = ({selectedActionData, actionButtonsData, onPressButto
         <ButtonRow buttons={updatedButtons} type="rounded" />
       </Animated.View>
       <Animated.View style={[secondComponentStyle]}>
-        <Button label="<-" onPress={() => handlePressButton('')} />
+        <Button label="<-" type="circular" onPress={() => handlePressButton('')} />
         {actionComponentsToRender[selectedActionData?.type]}
       </Animated.View>
     </Styles.Wrapper>

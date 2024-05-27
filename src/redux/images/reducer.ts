@@ -3,7 +3,6 @@ import {ReduxAction} from '@constants/interfaces';
 
 const initialState = {
   selectedImage: '',
-  userActions: [],
 };
 
 const images = (state = initialState, action: ReduxAction) => {
@@ -14,14 +13,8 @@ const images = (state = initialState, action: ReduxAction) => {
         selectedImage: action.payload,
       };
 
-    case types.UPDATE_USER_ACTIONS:
-      return {
-        ...state,
-        userActions: action.payload,
-      };
-
     case types.WIPE_IMAGE_STATE:
-      return state;
+      return initialState;
 
     default:
       return state;

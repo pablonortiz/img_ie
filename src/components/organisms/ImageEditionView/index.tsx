@@ -1,24 +1,30 @@
 import React from 'react';
 import Styles from './styles';
 import Button from '@components/atoms/Button';
-import Image from '@components/atoms/Image';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import selectSelectedImage from '@redux/images/selectors/selectSelectedImage';
 import useActionOnImage from '@hooks/useActionOnImage';
+import {State} from '@constants/interfaces';
+import {actUpdateActionsHistory} from '@redux/userActions/actions';
 
 const ImageEditionView = () => {
-  const selectedImage = useSelector(state => selectSelectedImage(state));
+  const dispatch = useDispatch();
+  const selectedImage = useSelector((state: State) => selectSelectedImage(state));
 
   const {cleanImage} = useActionOnImage();
+
+  const handleCleanImage = () => {
+    cleanImage();
+    return dispatch(actUpdateActionsHistory([]));
+  };
 
   return (
     <Styles.Wrapper>
       <Styles.ButtonsWrapper>
-        <Button label="D" type="circular" onPress={cleanImage} />
-        <Button label="R" type="circular" />
+        <Button label="D" type="circular" onPress={handleCleanImage} />
       </Styles.ButtonsWrapper>
       <Styles.ImageWrapper>
-        <Image src={selectedImage} style={{width: 200, height: 200}} />
+        <Styles.Image src={selectedImage} />
       </Styles.ImageWrapper>
     </Styles.Wrapper>
   );

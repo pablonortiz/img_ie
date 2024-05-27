@@ -1,23 +1,16 @@
 import React from 'react';
 import {Picker as PickerComponent, PickerProps} from '@react-native-picker/picker';
-import {ActionOnImage} from '@constants/interfaces';
 
 export interface PickerInterface extends PickerProps {
-  values: ActionOnImage[];
+  values: string[];
 }
 
-const Picker = ({values, selectedValue, onValueChange, ...props}: PickerInterface) => {
-  const renderItem = (item: ActionOnImage) => {
-    const {label} = item;
-
-    return <PickerComponent.Item label={label} value={label} />;
+const Picker = ({values, ...props}: PickerInterface) => {
+  const renderItem = (item: string) => {
+    return <PickerComponent.Item label={item} value={item} />;
   };
 
-  return (
-    <PickerComponent selectedValue={selectedValue} onValueChange={onValueChange} {...props}>
-      {values.map(item => renderItem(item))}
-    </PickerComponent>
-  );
+  return <PickerComponent {...props}>{values.map(item => renderItem(item))}</PickerComponent>;
 };
 
 export default Picker;

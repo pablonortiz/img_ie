@@ -1,4 +1,4 @@
-import {ActionType, IconOrientation, ImageAction, ImageActionValue} from './types';
+import {ActionType, IconOrientation, ImageAction} from './types';
 
 // General Interfaces
 
@@ -10,7 +10,10 @@ export interface ReduxAction {
 export interface State {
   images: {
     selectedImage: string;
-    userActions: UserAction[] | [];
+  };
+  userActions: {
+    selectedAction: string;
+    history: UserAction[] | [];
   };
 }
 
@@ -18,17 +21,12 @@ export interface ActionOnImage {
   action: ImageAction;
   label: string;
   type?: ActionType;
-  value?: ImageActionValue;
+  value?: string;
 }
 
 export interface UserAction {
   id: string;
-  userActions: [
-    {
-      image: string;
-      active: boolean;
-    },
-  ];
+  url: string;
 }
 
 export interface URLActionData {

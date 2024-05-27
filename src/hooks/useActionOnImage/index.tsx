@@ -1,6 +1,8 @@
-import {ActionOnImage} from '@constants/interfaces';
-import {actSetSelectedImage} from '@redux/images/actions';
+import {ActionOnImage, State} from '@constants/interfaces';
+import useActionsHistory from '@hooks/useActionsHistory';
+import {actSetSelectedImage, actWipeImageState} from '@redux/images/actions';
 import selectSelectedImage from '@redux/images/selectors/selectSelectedImage';
+import generateRandomId from '@utils/generateRandomId';
 import {isObject, isString, isUrl} from '@utils/index';
 import parseActionOnUrl from '@utils/parseActionOnUrl';
 import removeUrlParams from '@utils/removeUrlParams';
@@ -8,13 +10,15 @@ import {useDispatch, useSelector} from 'react-redux';
 
 const useActionOnImage = () => {
   const dispatch = useDispatch();
-  const selectedImage = useSelector(state => selectSelectedImage(state));
+  const selectedImage = useSelector((state: State) => selectSelectedImage(state));
+
+  const {addAction} = useActionsHistory();
 
   const processImage = (actionOnImage: ActionOnImage) => {
     if (!actionOnImage || !isObject(actionOnImage) || !Object.keys(actionOnImage).length) {
       return null;
     }
-    const {action, value} = actionOnImage;
+    const {action, value = ''} = actionOnImage;
 
     const processImageUrl = parseActionOnUrl({
       url: selectedImage,
@@ -25,6 +29,8 @@ const useActionOnImage = () => {
     if (!processImageUrl || !isString(processImageUrl) || !isUrl(processImageUrl)) {
       return null;
     }
+
+    addAction({id: generateRandomId(), url: processImageUrl});
 
     return dispatch(actSetSelectedImage(processImageUrl));
   };
@@ -38,7 +44,11 @@ const useActionOnImage = () => {
     return dispatch(actSetSelectedImage(originalImage));
   };
 
-  return {processImage, cleanImage};
+  const wipeImageData = () => {
+    dispatch(actWipeImageState());
+  };
+
+  return {processImage, cleanImage, wipeImageData};
 };
 
 export default useActionOnImage;

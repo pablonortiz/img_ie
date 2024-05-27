@@ -9,11 +9,17 @@ const roundedStyle = `
   border-radius: 5px;
 `;
 
-const circularStyle = `
-  border-radius: 15px;
-`;
+const circularStyle = (fontSize: number) => {
+  const size = fontSize * 1.8;
 
-const getStyleByType = (type: ButtonType | any): {} => {
+  return `
+  border-radius: ${size}px;
+  width: ${size}px;
+  height: ${size}px;
+`;
+};
+
+const getStyleByType = (type: ButtonType | any, fontSize: number): {} => {
   if (!type || !isString(type)) {
     return {};
   }
@@ -21,7 +27,7 @@ const getStyleByType = (type: ButtonType | any): {} => {
   const styles = {
     squared: squaredStyle,
     rounded: roundedStyle,
-    circular: circularStyle,
+    circular: () => circularStyle(fontSize),
   };
 
   const validButtonTypes: string[] = ['squared', 'rounded', 'circular'];

@@ -1,3 +1,4 @@
+import ImageComponent from '@components/atoms/Image';
 import styled from 'styled-components/native';
 
 const Wrapper = styled.View`
@@ -6,8 +7,9 @@ const Wrapper = styled.View`
 
 const ButtonsWrapper = styled.View`
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
   padding-horizontal: 20px;
+  margin-bottom: 20px;
 `;
 
 const ImageWrapper = styled.View`
@@ -17,4 +19,9 @@ const ImageWrapper = styled.View`
   border-width: 1px;
 `;
 
-export default {Wrapper, ButtonsWrapper, ImageWrapper};
+const Image = styled(ImageComponent)`
+  width: 350px;
+  height: 350px;
+`;
+
+export default {Wrapper, ButtonsWrapper, ImageWrapper, Image};
