@@ -2,7 +2,11 @@
 
 Img_ie is a mobile app developed on the React Native framework.
 
-This app allows the user to select an image from a set list of images and modify it with different adjustments through consuming the IMGIX endpoint.
+This app allows the user to select an image from a set list of images and modify it with different adjustments through consuming the IMGX endpoint.
+
+### Libraries
+
+Img_ie uses libraries such as @reduxjs/toolkit and redux-persist as to store certain data like the selected images or user action history on memory and make it persist through the app. When it comes to the UI side, the app uses libraries such as react-native-fast-image as to have a better performance caching the images and not doing unnecessary network requests.
 
 ### Installation
 
