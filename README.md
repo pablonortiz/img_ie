@@ -36,4 +36,4 @@ Personally, I think that starting a project with this pattern is a must, as it m
 
 ### Reusable utils and validations
 
-From the logic side, something that may seem like a solution that it’s intentionally harder are the way the hooks were coded, this is something that I wanted to include as to practice abstract thinking, this is so the hooks could be reusable for a future where new functionalities are needed for the app.
+From the logic side, something that may seem like a solution that it’s intentionally harder for this small project is the use of many reusable utils, this has been made this way as to take out the logic from the components and to not make the files extensive. For the validations side, something that may raise an eyebrow is the quantity of validations through the entire repo, although they may seem unnecessary at first, this has been made this way thinking on a production environment, where data from the backend could be not what we were expecting for.
